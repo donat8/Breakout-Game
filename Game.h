@@ -10,6 +10,13 @@
 
 #include "TimerFps.h"
 #include "Ball.h"
+#include "Bar.h"
+
+enum ballState {
+	ball_stationary,
+	ball_released,
+	ball_freely_moving
+};
 
 class Game {
 public:
@@ -30,9 +37,13 @@ private:
 	bool isRunning;
 	ALLEGRO_DISPLAY *window;
 	ALLEGRO_FONT* font;
-	Sprite* Bouncer;
+
+	Bar* Bouncer;
 
 	Ball *ball;
+
+	char ballState=ball_stationary;
+	
 
 	ALLEGRO_EVENT event;
 	ALLEGRO_EVENT_QUEUE* queue;

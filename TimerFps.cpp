@@ -2,7 +2,7 @@
 
 TimerFps::TimerFps(const int& fps)
 {
-	this->timer = al_create_timer(6.0/fps);
+	this->timer = al_create_timer(1.0/fps);
 	ObjecInit_Ex::InitObject(this->timer, "timer");
 }
 

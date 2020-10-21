@@ -1,6 +1,7 @@
 #pragma once
 #include "Sprite.h"
 #include "Const.h"
+#include "Bar.h"
 
 class Ball : public Sprite {
 public:
@@ -10,11 +11,20 @@ public:
 	void Update();
 	void UpdateBeforeRelease();
 	void Reset();
+
+
+
+	void InvertX();
+	void InvertY();
+
 	void onCollideWithWall();
-	void onCollideWithPaddle();
+	void onCollideWithBar(Bar bar);
 	void onCollideWithBrick();
 
 private:
+
+	float NextBallPosX = posX + Acceleration + (GetSpriteWidth() / 2);
+	float NextBallPosY = posY + Acceleration + (GetSpriteHeight() / 2);
 
 	int NumOfBalls = 3;
 	

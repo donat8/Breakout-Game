@@ -8,3 +8,4 @@ const unsigned int Const::BALL_INIT_Y = 482;
 
 const unsigned int Const::BAR_INIT_X = Const::SCREEN_WIDTH / 2-54;
 const unsigned int Const::BAR_INIT_Y = 500;
+

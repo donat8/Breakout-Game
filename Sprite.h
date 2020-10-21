@@ -18,7 +18,8 @@ public:
 	int GetPosX() { return this->posX; };
 	int GetPosY() { return this->posY; };
 
-	void Move(float x);
+	//for moving with the mouse
+	virtual void Move(float x);
 
 	void DrawInit();
 
@@ -26,22 +27,22 @@ public:
 
 	int GetAcceleration() { return this->Acceleration; };
 
-	void Up() { posY -= Acceleration; };
-	void Down() { posY += Acceleration; };
+	void Up() { posY -= Acceleration/10000000;	};
+	void Down() { posY += Acceleration/ 10000000; };
 
 	void Left() {
 		posX -= Acceleration;
-		Acceleration += Acceleration / 3;
+	/*	Acceleration += Acceleration / 3;
 		if (Acceleration > 20) {
 			Acceleration = 20;
-		}
+		}*/
 	};
 
 	void Right() { posX += Acceleration; 
-		Acceleration += Acceleration / 3;
+		/*Acceleration += Acceleration / 3;
 		if (Acceleration > 20) {
 			Acceleration = 20;
-		}
+		}*/
 	};
 
 	void RestartAcceleration() { Acceleration = initAcceleration; };
@@ -53,14 +54,16 @@ public:
 	void GetRight();
 	void GetLeft();
 
+	bool Collided = false;
+
 protected:
 	float posX, posY = 0;
-	float Acceleration = 3;
+	float Acceleration = 1;
 
 	//initial position and acceleration
 	int initposX = 0;
 	int initposY = 0;
-	int initAcceleration = 3;
+	int initAcceleration = 1;
 
 
 private:

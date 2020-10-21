@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "Sprite.h"
+#include <vector>
 
 class Brick :Sprite {
 public:
@@ -28,6 +29,8 @@ private:
 
 	//how much points per break
 	static unsigned int BreakScore;
+
+	
 	
 
 };

@@ -11,24 +11,25 @@ Game::~Game() {}
 void Game::init(int width, int height) 
 {
 	al_init();
-
 	al_init_font_addon();
 	al_init_ttf_addon();
 	al_init_image_addon();
 	
-
+	//mouse and keyboard
 	al_install_keyboard();
 	al_install_mouse();
 
-	al_init();
-
+	//create display
 	window = al_create_display(width, height);
 
+	//create queue for events
 	queue = al_create_event_queue();
 
+	//timer
 	timer = new TimerFps(60);
 	timer->startTimer();
 
+	//register events
 	al_register_event_source(queue, al_get_keyboard_event_source());
 	al_register_event_source(queue, al_get_display_event_source(window));
 	al_register_event_source(queue, al_get_mouse_event_source());
@@ -39,18 +40,15 @@ void Game::init(int width, int height)
 	//if (fullscreen)
 	//	flags = SDL_WINDOW_FULLSCREEN;
 	
-	
-	isRunning = true;
 	font = al_load_ttf_font("Font/zig_____.ttf", 64, 0);
 	
-	Bouncer = new Sprite(Const::BAR_INIT_X,Const::BAR_INIT_Y);
-	Bouncer->SetSprite("Textures/Bar.dds");
+	Bouncer = new Bar();
+	ball = new Ball();
 
 	al_destroy_bitmap(background);
 	background = al_load_bitmap("Textures/Boards/Board_01.dds");
 
-	ball = new Ball();
-	
+	isRunning = true;
 }
 
 void Game::handleEvents() {
@@ -69,32 +67,51 @@ void Game::handleEvents() {
 			mouseFlag = true;
 		if (event.type == ALLEGRO_EVENT_MOUSE_AXES && mouseFlag == true) {
 			Bouncer->Move(event.mouse.x);
-			ball->Move(event.mouse.x);
+			if (ballState == ball_stationary)
+				ball->Move(event.mouse.x);
 		}
 
 		if (al_key_down(&keyState, ALLEGRO_KEY_RIGHT)) {
 			Bouncer->Right();
-			ball->Right();
-
+			if(ballState == ball_stationary)
+				ball->Right();
 		}
 		if (al_key_down(&keyState, ALLEGRO_KEY_LEFT)) {
 			Bouncer->Left();
-			ball->Left();
+			if (ballState==ball_stationary)
+				ball->Left();
 		}
 		//CAP @60fps or more
-		if (event.type == ALLEGRO_EVENT_TIMER)
+		if (event.type == ALLEGRO_EVENT_TIMER) {
+		
+			switch (ballState) {
+			case ball_stationary:
+				ball->UpdateBeforeRelease();
+				if (al_key_down(&keyState, ALLEGRO_KEY_SPACE))
+					ballState = ball_released;
+				break;
+			case ball_released:
+				ball->Up();
+				ball->Update();
+				
+				if(ball->Collided==true)
+					ballState = ball_freely_moving;
+				break;
+			case ball_freely_moving:
+
+				ball->onCollideWithWall();
+				ball->Update();
+				break;
+			}
+			ball->onCollideWithWall();
+			/*ball->Update();*/
 			al_flip_display();
+		
+		}
 	
 		//on SPACE key start the ball
-		if (event.type == ALLEGRO_KEY_SPACE)
-			ballFlag = true;
-		if (ballFlag == true) {
-			ball->Up();
-			ball->Update();
-		}
-	/*	else
 			
-		ball->UpdateBeforeRelease();*/
+		
 	}
 }
 
@@ -103,9 +120,19 @@ void Game::handleEvents() {
 void Game::Update() {
 
 	al_draw_bitmap(background,0,0,0);
+
+	/*if (ballFlag == true) {
+		ball->onCollideWithWall();
+		ball->Up();
+		ball->Update();
+		std::cout << ball->GetPosX() << " " << ball->GetPosY() << std::endl;
+	}
+	else
+		ball->UpdateBeforeRelease();*/
+
 	Bouncer->Update();
 
-	ball->UpdateBeforeRelease();
+	/*ball->UpdateBeforeRelease();*/
 	//ball->Update();
 
 	

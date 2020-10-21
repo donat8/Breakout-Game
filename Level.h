@@ -9,13 +9,22 @@ public:
 	void InitBrickMap();
 	void StartLevel();
 
-private:
-	int id;
-	int RowCount;
-	int ColumnCount;
-	int RowSpacing;
-	int ColumnSpacing;
-	const char* BackgroundTexturePath;
-	const char* BricksMap[20][3];
+protected:
+
+	unsigned int RowCount;
+	unsigned int ColumnCount;
+	unsigned int RowSpacing;
+	unsigned int ColumnSpacing;
+	const char* BackgroundTexture;
+
+	char Id[2];
+	const char* Texture;
+	unsigned int HitPoints;
+	const char* HitSound;
+	const char* BreakSound;
+	unsigned int BreakScore;
+
+	//list of brick configuration
+	const char* Bricks;
 
 };
