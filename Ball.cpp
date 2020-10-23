@@ -1,74 +1,82 @@
 #include "Ball.h"
 
 
-
-Ball::Ball():Sprite(Const::BALL_INIT_X,Const::BALL_INIT_Y)
+Ball::Ball(float posX, float posY, const Vec2& dir_in): Sprite(posX,posY)	
 {
 	SetSprite("Textures/Ball.dds");
+	SetDirection(dir_in);
 }
 
-
-void Ball::Update()
+void Ball::Draw()
 {
-	al_draw_bitmap(sprite, Sprite::posX, Sprite::posY, 0);
+	al_draw_bitmap(sprite, pos.x,pos.y, 0);
 }
 
+void Ball::Update(float val)
+{
+	pos += vel * val;
+}
+
+//reprogram
 void Ball::UpdateBeforeRelease() {
-	al_draw_bitmap(sprite, Sprite::posX, Sprite::initposY, 0);
+	al_draw_bitmap(sprite, Sprite::pos.x, Sprite::initposY, 0);
 }
 
-void Ball::Reset()
+void Ball::ResetBall()
 {
 	al_draw_bitmap(sprite, Sprite::initposX, Sprite::initposY, 0);
 }
 
+Rect Ball::GetBallRect() const
+{
+	return GetSpriteRect();
+}
+
+Vec2 Ball::GetVelocity() const
+{
+	return vel;
+}
+
+Vec2 Ball::GetCenterOfBall() const
+{
+	return Vec2(GetSpriteWidth() / 2, GetSpriteHeight() / 2);
+}
 
 
 void Ball::InvertX(){
-
+	vel.x = -vel.x;
 }
 
 void Ball::InvertY() {
-
+	vel.y = -vel.y;
 }
 
 
 
-void Ball::onCollideWithWall()
+int Ball::onCollideWithWall(const Rect& walls)
 {
+	int collided = 0;
+	Rect ball = GetSpriteRect();
 	
-
 	//collide with top 
-	if (NextBallPosY < 0/*screen top */ ) {
-		this->Down();
-		Collided = true;
+	if (ball.left < walls.left|| ball.right>walls.right) {
+		InvertX();
+		collided = 1;
 	}
-	//collide with Left
-	if (NextBallPosX < 0) {
-		this->Right();
-		Collided = true;
+	if (ball.top < walls.top) {
+		InvertY();
 	}
-	//collide with right
-	if (NextBallPosX > Const::SCREEN_WIDTH){
-		this->Left();
-		Collided = true;
+	//ball out of bounds (lose a life)
+	else if (ball.bottom > walls.bottom) {
+		InvertY();
+		collided = 2;
 	}
+	return collided;
+}
+
+void Ball::SetDirection(const Vec2& dir)
+{
+	vel = dir.GetNormalized() * speed;
 }
  
-void Ball::onCollideWithBar(Bar bar){
-	double topy1=bar.GetPosY();
-	double leftx1=bar.GetPosX();
-	double rightx1=leftx1+bar.GetSpriteWidth();
-	double boty1=topy1+bar.GetSpriteHeight();
-
-	double topY2 = NextBallPosY;
-	double leftX2 = NextBallPosX;
-	double rightX2 = leftX2 + GetSpriteWidth();
-	double botY2 = topY2 + GetSpriteHeight();
-
-	if ((rightx1 < leftX2) || (leftx1 > rightX2))
-		return false;
-	if ((boty1 < topY2) || (topy1 > botY2))
-		return false;
-}
 

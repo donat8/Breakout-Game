@@ -1,16 +1,17 @@
 #include "Sprite.h"
+#include <iostream>
 
-Sprite::Sprite(const int& initposx, const int& initposy)
+Sprite::Sprite(float posX, float posY)
 {
-	this->initposX = initposx;
-	this->initposY = initposy;
-	this->posX = initposx;
+	/*pos =Vec2(posX, posY);*/
+	pos.x = posX;
+	pos.y = posY;
 }
 
-Sprite::~Sprite()
-{
-	al_destroy_bitmap(sprite);
-}
+//Sprite::~Sprite()
+//{
+//	al_destroy_bitmap(sprite);
+//}
 
 void Sprite::SetSprite(const char* path)
 { 
@@ -18,30 +19,48 @@ void Sprite::SetSprite(const char* path)
 	sprite = al_load_bitmap(path);
 }
 
-//hm
-void Sprite::Update()
+float Sprite::GetSpriteWidth() const 
 {
-	////for ball
-	//this->posX += Acceleration;
-	//this->posY += Acceleration;
-
-	//for bouncer
-	
-	al_draw_bitmap(sprite, posX, initposY, 0);
+	return al_get_bitmap_width(sprite); 
 }
+
+float Sprite::GetSpriteHeight() const 
+{
+	return al_get_bitmap_height(sprite); 
+}
+
+//hm
+//void Sprite::Update()
+//{
+//
+//	//for bouncer
+//	
+//	al_draw_bitmap(sprite, pos.x, initposY, 0);
+//}
 
 void Sprite::Move(float x)
 {
-	this->posX = x-GetSpriteWidth()/2;
-}
-
-void Sprite::DrawInit()
-{
-	al_draw_bitmap(sprite, initposX, initposY,0 );
+	this->pos.x = x-GetSpriteWidth()/2;
 }
 
 
 ALLEGRO_BITMAP* Sprite::GetSprite()
 {
 	return this->sprite;
+}
+
+Rect Sprite::GetSpriteRect() const
+{
+	//std::cout << GetSpriteWidth() << std::endl;
+
+	return Rect(pos,GetSpriteWidth(),GetSpriteHeight());
+}
+
+Vec2 Sprite::GetPos() {
+	return this->pos;
+}
+
+void Sprite::SetPos(Vec2 new_pos)
+{ 
+	this->pos = new_pos; 
 }

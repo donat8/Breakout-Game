@@ -38,13 +38,12 @@ private:
 	ALLEGRO_DISPLAY *window;
 	ALLEGRO_FONT* font;
 
-	Bar* Bouncer;
-
-	Ball *ball;
+	Rect walls;
+	Bar *bar;
+	Ball* ball;
 
 	char ballState=ball_stationary;
 	
-
 	ALLEGRO_EVENT event;
 	ALLEGRO_EVENT_QUEUE* queue;
 
@@ -54,6 +53,5 @@ private:
 	ALLEGRO_KEYBOARD_STATE keyState;
 
 	TimerFps *timer; 
-
 
 };

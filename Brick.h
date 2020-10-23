@@ -3,24 +3,30 @@
 #include <iostream>
 #include "Sprite.h"
 #include <vector>
+#include "Ball.h"
 
-class Brick :Sprite {
+class Brick : public Sprite {
 public:
-	Brick();
+	Brick(float posX, float posY, const char* texture);
 	~Brick();
 
 	void DrawBrick();
+
 	int GetBreakScore();
+	int SetBreakScore();
 
 	void PlayHitSound();
 	void PlayBreakSound();
 
-	void DestroyBrickInGame();
+	bool CheckBallCollision(const Ball& ball) const;
+	void ExecuteBallCollision(Ball& ball);
+	Vec2 GetCenter() const;
 
 
 private:
 	const char* id;
 	const char* TexturePath;
+
 	//times to hit to destroy
 	static unsigned int HitPoints;
 
@@ -30,7 +36,7 @@ private:
 	//how much points per break
 	static unsigned int BreakScore;
 
-	
-	
+	Rect rect;
+	bool destroyed = true;
 
 };

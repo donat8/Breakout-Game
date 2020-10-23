@@ -1,12 +1,66 @@
 #include "Bar.h"
-#include "Const.h"
+#include <cmath>
+#include <iostream>
 
 
-Bar::Bar():Sprite(Const::BAR_INIT_X,Const::BAR_INIT_Y)
+Bar::Bar(float posX,float posY) :Sprite(posX, posY)
 {
 	SetSprite("Textures/Bar.dds");
+	halfWidth = GetSpriteWidth() / 2;
 }
 
 Bar::~Bar()
 {
 }
+
+void Bar::Draw() const
+{
+	al_draw_bitmap(sprite, pos.x, pos.y, 0);
+}
+
+//bool Bar::BallCollision(Ball& ball)
+//{
+//	const Rect bar = GetBarRect();
+//
+//	if (bar.IsOverlappingWith(ball.GetBallRect() ) )
+//	{
+//		const Vec2 ballPos = ball.GetPos();
+//		if (std::signbit(ball.GetVelocity().x) == std::signbit((ballPos - pos).x)
+//			|| (ballPos.x >= bar.left && ballPos.x <= bar.right)) {
+//
+//			Vec2 dir;
+//			const float DiffOnXAxis = ballPos.x - pos.x;
+//
+//		}
+//	}
+//}
+
+void Bar::WallCollision(const Rect& walls)
+{
+	const Rect bar = GetBarRect();
+	std::cout << bar.right << std::endl;
+	
+	if (bar.left < walls.left)
+		pos.x += walls.left - bar.left;
+	else if (bar.right > walls.right)
+		pos.x -= bar.right - walls.right;
+}
+
+void Bar::Update(const ALLEGRO_KEYBOARD_STATE key)
+{
+	if (al_key_down(&key, ALLEGRO_KEY_RIGHT))
+		pos.x += speed*multiplier;
+	if (al_key_down(&key, ALLEGRO_KEY_LEFT))
+		pos.x -= speed * multiplier;
+}
+
+
+Rect Bar::GetBarRect() const
+{
+	return GetSpriteRect();
+}
+
+void Bar::ResetCooldown()
+{
+}
+

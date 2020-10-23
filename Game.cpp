@@ -2,22 +2,23 @@
 
 
 
+
 Game::Game() {}
 
 Game::~Game() {}
 
-
+//todo: fullscreen
 
 void Game::init(int width, int height) 
 {
-	al_init();
-	al_init_font_addon();
-	al_init_ttf_addon();
-	al_init_image_addon();
+	ObjecInit_Ex::InitObject(al_init(),"Allegro");
+	ObjecInit_Ex::InitObject(al_init_font_addon(),"Font addon");
+	ObjecInit_Ex::InitObject(al_init_ttf_addon(),"Font TTF Addon");
+	ObjecInit_Ex::InitObject(al_init_image_addon(),"Image addon");
 	
 	//mouse and keyboard
-	al_install_keyboard();
-	al_install_mouse();
+	ObjecInit_Ex::InitObject(al_install_keyboard(),"Keyboard");
+	ObjecInit_Ex::InitObject(al_install_mouse(),"Mouse");
 
 	//create display
 	window = al_create_display(width, height);
@@ -35,15 +36,16 @@ void Game::init(int width, int height)
 	al_register_event_source(queue, al_get_mouse_event_source());
 	al_register_event_source(queue, al_get_timer_event_source(timer->getTimer()));
 	
+	font = al_load_ttf_font("Font/zig_____.ttf", 32, 0);
 	
-	//int flags = 0; 
-	//if (fullscreen)
-	//	flags = SDL_WINDOW_FULLSCREEN;
+	walls = Rect(0, Consts::SCREEN_WIDTH,0.0f, Consts::SCREEN_HEIGHT);
+
+	bar = new Bar(Consts::BAR_INIT_X,Consts::BAR_INIT_Y);
+	Vec2 direction;
+	direction.x = 0;
+	direction.y = -1;
+	ball = new Ball(Consts::BALL_INIT_X, Consts::BALL_INIT_Y,direction);
 	
-	font = al_load_ttf_font("Font/zig_____.ttf", 64, 0);
-	
-	Bouncer = new Bar();
-	ball = new Ball();
 
 	al_destroy_bitmap(background);
 	background = al_load_bitmap("Textures/Boards/Board_01.dds");
@@ -52,9 +54,9 @@ void Game::init(int width, int height)
 }
 
 void Game::handleEvents() {
-		
+
 	al_get_keyboard_state(&keyState);
-	
+
 	if (!al_is_event_queue_empty(queue)) {
 
 		al_wait_for_event(queue, &event);
@@ -66,52 +68,44 @@ void Game::handleEvents() {
 		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
 			mouseFlag = true;
 		if (event.type == ALLEGRO_EVENT_MOUSE_AXES && mouseFlag == true) {
-			Bouncer->Move(event.mouse.x);
+			bar->Move(event.mouse.x);
 			if (ballState == ball_stationary)
 				ball->Move(event.mouse.x);
 		}
 
-		if (al_key_down(&keyState, ALLEGRO_KEY_RIGHT)) {
-			Bouncer->Right();
-			if(ballState == ball_stationary)
-				ball->Right();
-		}
-		if (al_key_down(&keyState, ALLEGRO_KEY_LEFT)) {
-			Bouncer->Left();
-			if (ballState==ball_stationary)
-				ball->Left();
-		}
-		//CAP @60fps or more
+
+
+		//if (al_key_down(&keyState, ALLEGRO_KEY_RIGHT)) {
+		//	Bouncer->Right();
+		//	if(ballState == ball_stationary)
+		//		ball->Right();
+		//}
+		//if (al_key_down(&keyState, ALLEGRO_KEY_LEFT)) {
+		//	Bouncer->Left();
+		//	if (ballState==ball_stationary)
+		//		ball->Left();
+		//}
+		Vec2 ballStatPos = Vec2(bar->GetPos().x+bar->GetSpriteWidth()/2-ball->GetSpriteWidth()/2, bar->GetPos().y-bar->GetSpriteHeight()/2-5);
+
+		/*CAP @60fps or more*/
 		if (event.type == ALLEGRO_EVENT_TIMER) {
-		
+
 			switch (ballState) {
 			case ball_stationary:
-				ball->UpdateBeforeRelease();
+				ball->SetPos(ballStatPos);
+				ball->Update(0);
 				if (al_key_down(&keyState, ALLEGRO_KEY_SPACE))
 					ballState = ball_released;
 				break;
 			case ball_released:
-				ball->Up();
-				ball->Update();
-				
-				if(ball->Collided==true)
-					ballState = ball_freely_moving;
+				ball->Update(1);
 				break;
-			case ball_freely_moving:
+				//al_flip_display();
 
-				ball->onCollideWithWall();
-				ball->Update();
-				break;
 			}
-			ball->onCollideWithWall();
-			/*ball->Update();*/
-			al_flip_display();
-		
+
+			bar->Update(keyState);
 		}
-	
-		//on SPACE key start the ball
-			
-		
 	}
 }
 
@@ -119,7 +113,8 @@ void Game::handleEvents() {
 
 void Game::Update() {
 
-	al_draw_bitmap(background,0,0,0);
+	
+	
 
 	/*if (ballFlag == true) {
 		ball->onCollideWithWall();
@@ -130,7 +125,6 @@ void Game::Update() {
 	else
 		ball->UpdateBeforeRelease();*/
 
-	Bouncer->Update();
 
 	/*ball->UpdateBeforeRelease();*/
 	//ball->Update();
@@ -140,7 +134,20 @@ void Game::Update() {
 
 void Game::render() 
 {
-
+	
+	if (event.type == ALLEGRO_EVENT_TIMER) {
+	
+		al_draw_bitmap(background, 0, 0, 0);
+		bar->WallCollision(walls);
+		ball->onCollideWithWall(walls);
+		bar->Draw();
+		ball->Draw();
+		
+	
+		
+		al_flip_display();
+		
+	}
 }
 
 void Game::clean() {

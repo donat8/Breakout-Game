@@ -1,6 +1,6 @@
 #include "deps/tinyxml2.h"
 #include "Game.h"
-#include "Const.h"
+#include "Consts.h"
 
 using namespace tinyxml2;
 
@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
 
 	game = new Game();
 
-	game->init(Const::SCREEN_WIDTH, Const::SCREEN_HEIGHT);
+	game->init(Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT);
 
 	while (game->running()) {
 		
