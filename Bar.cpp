@@ -18,27 +18,54 @@ void Bar::Draw() const
 	al_draw_bitmap(sprite, pos.x, pos.y, 0);
 }
 
-//bool Bar::BallCollision(Ball& ball)
-//{
-//	const Rect bar = GetBarRect();
-//
-//	if (bar.IsOverlappingWith(ball.GetBallRect() ) )
-//	{
-//		const Vec2 ballPos = ball.GetPos();
-//		if (std::signbit(ball.GetVelocity().x) == std::signbit((ballPos - pos).x)
-//			|| (ballPos.x >= bar.left && ballPos.x <= bar.right)) {
-//
-//			Vec2 dir;
-//			const float DiffOnXAxis = ballPos.x - pos.x;
-//
-//		}
-//	}
-//}
+bool Bar::BallCollision(Ball& ball, double BarXBefore)
+{
+	const Rect bar = GetBarRect();
+
+	if (bar.IsOverlappingWith(ball.GetBallRect())==true)
+	{
+		const Vec2 ballPos = ball.GetPos();
+		//if (std::signbit(ball.GetVelocity().x) == std::signbit((ballPos - pos).x)
+		//	|| (ballPos.x >= bar.left && ballPos.x <= bar.right)) {
+
+		//	/*Vec2 dir;
+		//	const float DiffOnXAxis = ballPos.x - pos.x;
+		//	if (std::abs(xDifference) < fixedZoneHalfWidth)
+		//	{
+		//		if (xDifference < 0.0f)
+		//		{
+		//			dir = Vec2(-fixedZoneExitX, -1.0f);
+		//		}
+		//		else
+		//		{
+		//			dir = Vec2(fixedZoneExitX, -1.0f);
+		//		}
+		//	}
+		//	else
+		//	{
+		//		dir = Vec2(xDifference * exitXFactor, -1.0f);
+		//	}
+		//	ball.SetDirection(dir);*/
+		//}
+		/*else
+		{*/
+
+		double AfterBefore = GetBarRect().left - BarXBefore;
+		std::cout << AfterBefore << std::endl;
+		ball.InvertY();
+		/*}*/
+
+		return true;
+	}
+	return false;
+}
+
+
 
 void Bar::WallCollision(const Rect& walls)
 {
 	const Rect bar = GetBarRect();
-	std::cout << bar.right << std::endl;
+
 	
 	if (bar.left < walls.left)
 		pos.x += walls.left - bar.left;

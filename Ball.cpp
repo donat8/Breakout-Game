@@ -1,6 +1,7 @@
 #include "Ball.h"
 
 
+
 Ball::Ball(float posX, float posY, const Vec2& dir_in): Sprite(posX,posY)	
 {
 	SetSprite("Textures/Ball.dds");
@@ -53,7 +54,7 @@ void Ball::InvertY() {
 
 
 
-int Ball::onCollideWithWall(const Rect& walls)
+int Ball::BallToWallCollision(const Rect& walls)
 {
 	int collided = 0;
 	Rect ball = GetSpriteRect();

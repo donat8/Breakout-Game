@@ -4,7 +4,6 @@
 Rect::Rect(float left_in, float right_in, float top_in, float bottom_in)
 	:left(left_in),right(right_in),top(top_in),bottom(bottom_in)
 {
-	std::cout << right_in << std::endl;
 }
 
 Rect::Rect(const Vec2& topLeft, const Vec2& bottomRight)
@@ -21,8 +20,8 @@ Rect::Rect(const Vec2& topLeft, float width, float height)
 
 bool Rect::IsOverlappingWith(const Rect& other) const
 {
-	return right > other.left && left < other.right
-		&& bottom > other.top && top < other.bottom;
+   	return right > other.left && left < other.right
+		&& bottom > other.top && top < other.bottom;	
 }
 
 bool Rect::IsContainedBy(const Rect& other) const

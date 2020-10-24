@@ -1,18 +1,23 @@
 #include "Brick.h"
 
 
-
-Brick::Brick(float posX,float posY, const char* texture):Sprite(posX,posY),
-	destroyed(false)
+Brick::Brick(const char* Id, const char* Texture, const unsigned int* HitPoints, const char* HitSound,
+	const char* BreakSound, unsigned int* BreakScore)
+	:Sprite(), Id(Id), HitPoints(*HitPoints), HitSound(HitSound), BreakSound(BreakSound),BreakScore(*BreakScore)
 {
-	rect = Rect(posX, GetSpriteWidth(),posY, GetSpriteHeight());
-	SetSprite(texture);
+	Id = Id;
+	SetSprite(Texture);
+	HitPoints = HitPoints;
+	HitSound = HitSound; 
+	BreakSound = BreakSound;
+	BreakScore = BreakScore;
+
 }
 
 void Brick::DrawBrick()
 {
 	if(!destroyed)
-		al_draw_bitmap(sprite, pos.x, pos.y, 0);
+		al_draw_bitmap(GetSprite(), pos.x, pos.y, 0);
 }
 
 bool Brick::CheckBallCollision(const Ball& ball) const

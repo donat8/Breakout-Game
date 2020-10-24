@@ -3,7 +3,38 @@
 
 
 
-Game::Game() {}
+Game::Game() 
+{
+	
+	parser->LoadXMLFile("Levels/Level1.xml");
+	parser->ReadXMLFile(*Level1);
+
+	font = al_load_ttf_font("Font/zig_____.ttf", 32, 0);
+
+	Vec2 direction;
+	direction.x = 0;
+	direction.y = -1;
+
+	walls = Rect(0, Consts::SCREEN_WIDTH, 0.0f, Consts::SCREEN_HEIGHT);
+	bar = new Bar(Consts::BAR_INIT_X, Consts::BAR_INIT_Y);
+	ball = new Ball(Consts::BALL_INIT_X, Consts::BALL_INIT_Y, direction);
+
+	//create queue for events
+	queue = al_create_event_queue();
+
+
+	
+	//Level2 = new Level("Levels/Level2.txt");
+	//Level3 = new Level("Levels/Level3.txt");
+
+	al_destroy_bitmap(background);
+	background = al_load_bitmap("Textures/Boards/Board_01.dds");
+
+	//timer
+	timer = new TimerFps(60);
+
+	isRunning = true;
+}
 
 Game::~Game() {}
 
@@ -23,12 +54,6 @@ void Game::init(int width, int height)
 	//create display
 	window = al_create_display(width, height);
 
-	//create queue for events
-	queue = al_create_event_queue();
-
-	//timer
-	timer = new TimerFps(60);
-	timer->startTimer();
 
 	//register events
 	al_register_event_source(queue, al_get_keyboard_event_source());
@@ -36,24 +61,14 @@ void Game::init(int width, int height)
 	al_register_event_source(queue, al_get_mouse_event_source());
 	al_register_event_source(queue, al_get_timer_event_source(timer->getTimer()));
 	
-	font = al_load_ttf_font("Font/zig_____.ttf", 32, 0);
-	
-	walls = Rect(0, Consts::SCREEN_WIDTH,0.0f, Consts::SCREEN_HEIGHT);
-
-	bar = new Bar(Consts::BAR_INIT_X,Consts::BAR_INIT_Y);
-	Vec2 direction;
-	direction.x = 0;
-	direction.y = -1;
-	ball = new Ball(Consts::BALL_INIT_X, Consts::BALL_INIT_Y,direction);
 	
 
-	al_destroy_bitmap(background);
-	background = al_load_bitmap("Textures/Boards/Board_01.dds");
-
-	isRunning = true;
+	timer->startTimer();
 }
 
 void Game::handleEvents() {
+
+	BarXBefore = bar->GetPos().x;
 
 	al_get_keyboard_state(&keyState);
 
@@ -68,28 +83,18 @@ void Game::handleEvents() {
 		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
 			mouseFlag = true;
 		if (event.type == ALLEGRO_EVENT_MOUSE_AXES && mouseFlag == true) {
-			bar->Move(event.mouse.x);
-			if (ballState == ball_stationary)
-				ball->Move(event.mouse.x);
+			{
+		    	bar->Move(event.mouse.x);
+		    	BarXBefore = bar->GetPos().x;
+			}
+			 if (ballState == ball_stationary)
+			   	ball->Move(event.mouse.x);
 		}
-
-
-
-		//if (al_key_down(&keyState, ALLEGRO_KEY_RIGHT)) {
-		//	Bouncer->Right();
-		//	if(ballState == ball_stationary)
-		//		ball->Right();
-		//}
-		//if (al_key_down(&keyState, ALLEGRO_KEY_LEFT)) {
-		//	Bouncer->Left();
-		//	if (ballState==ball_stationary)
-		//		ball->Left();
-		//}
 		Vec2 ballStatPos = Vec2(bar->GetPos().x+bar->GetSpriteWidth()/2-ball->GetSpriteWidth()/2, bar->GetPos().y-bar->GetSpriteHeight()/2-5);
 
 		/*CAP @60fps or more*/
 		if (event.type == ALLEGRO_EVENT_TIMER) {
-
+			bar->Update(keyState);
 			switch (ballState) {
 			case ball_stationary:
 				ball->SetPos(ballStatPos);
@@ -99,12 +104,12 @@ void Game::handleEvents() {
 				break;
 			case ball_released:
 				ball->Update(1);
+				ball->BallToWallCollision(walls);
+				bar->BallCollision(*ball, BarXBefore);
+
+				ball->Update(1);
 				break;
-				//al_flip_display();
-
-			}
-
-			bar->Update(keyState);
+			}		
 		}
 	}
 }
@@ -116,18 +121,8 @@ void Game::Update() {
 	
 	
 
-	/*if (ballFlag == true) {
-		ball->onCollideWithWall();
-		ball->Up();
-		ball->Update();
-		std::cout << ball->GetPosX() << " " << ball->GetPosY() << std::endl;
-	}
-	else
-		ball->UpdateBeforeRelease();*/
+	
 
-
-	/*ball->UpdateBeforeRelease();*/
-	//ball->Update();
 
 	
 }
@@ -139,11 +134,10 @@ void Game::render()
 	
 		al_draw_bitmap(background, 0, 0, 0);
 		bar->WallCollision(walls);
-		ball->onCollideWithWall(walls);
-		bar->Draw();
-		ball->Draw();
 		
 	
+		bar->Draw();
+		ball->Draw();
 		
 		al_flip_display();
 		

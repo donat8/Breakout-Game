@@ -6,6 +6,7 @@
 class Sprite {
 
 public:
+	Sprite() = default;
 	Sprite(float posX,float posY);
 
 	/*virtual void Reset();*/

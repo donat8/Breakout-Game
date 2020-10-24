@@ -2,6 +2,9 @@
 #include "Sprite.h"
 #include "Ball.h"
 #include "Consts.h"
+#include "Vec2.h"
+
+
 
 class Bar : public Sprite
 {
@@ -11,7 +14,8 @@ public:
 
     void Draw() const;
 
-    //bool BallCollision(Ball& ball);
+    bool BallCollision(Ball& ball, double BarXBefore);
+
     void WallCollision(const Rect& walls);
 
     void Update(const ALLEGRO_KEYBOARD_STATE key);
@@ -19,9 +23,6 @@ public:
     Rect GetBarRect() const;
 
     void ResetCooldown();
-
-
-    
 
 
 private:

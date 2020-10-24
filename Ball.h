@@ -1,8 +1,10 @@
 #pragma once
 
 #include "Consts.h"
-#include "Bar.h"
+//#include "Bar.h"
+#include "Rect.h"
 #include "Vec2.h"
+#include "Sprite.h"
 
 class Ball : public Sprite{
 public:
@@ -29,7 +31,7 @@ public:
 	void InvertX();
 	void InvertY();
 	//0 - ne collidea, 1- collidea, 2- collidea sa podom
-	int onCollideWithWall(const Rect& walls);
+	int BallToWallCollision(const Rect& walls);
 
 	void SetDirection(const Vec2& dir);
 
