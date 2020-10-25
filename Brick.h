@@ -18,7 +18,8 @@ public:
 	void PlayHitSound();
 	void PlayBreakSound();
 
-
+	Rect GetBrickRect()  const;
+	void SetBrickRect();
 
 	bool CheckBallCollision(const Ball& ball) const;
 	void ExecuteBallCollision(Ball& ball);

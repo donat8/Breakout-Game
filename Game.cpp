@@ -106,8 +106,10 @@ void Game::handleEvents() {
 				ball->Update(1);
 				ball->BallToWallCollision(walls);
 				bar->BallCollision(*ball, BarXBefore);
-
+				
 				ball->Update(1);
+				Level1->CheckBrickBallCollision(*ball);
+			//	Level1->CheckBrickBallCollision(*ball);
 				break;
 			}		
 		}

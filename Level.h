@@ -10,6 +10,8 @@ public:
 	ALLEGRO_BITMAP* SetLevelBackground();
 	void InitBrickMap(Level *level);
 	void DrawBrickMap();
+	void CheckBrickBallCollision(Ball& ball);
+
 	void StartLevel();
 
     const unsigned int *RowCount;
@@ -40,7 +42,7 @@ protected:
 
 	
 
-	Brick *bricks[30];
+	Brick *bricks[40];
 
 
 

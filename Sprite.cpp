@@ -62,6 +62,8 @@ Rect Sprite::GetSpriteRect() const
 	return Rect(pos,GetSpriteWidth(),GetSpriteHeight());
 }
 
+
+
 Vec2 Sprite::GetPos() {
 	return this->pos;
 }

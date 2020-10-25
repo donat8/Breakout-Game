@@ -18,6 +18,7 @@ public:
 	float GetSpriteWidth() const;
 	float GetSpriteHeight() const;
 	Rect GetSpriteRect() const;
+	
 
 	Vec2 GetPos();
 	void SetPos(Vec2 new_pos);

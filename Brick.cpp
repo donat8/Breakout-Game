@@ -11,6 +11,7 @@ Brick::Brick(const char* Id, const char* Texture, const unsigned int* HitPoints,
 	HitSound = HitSound; 
 	BreakSound = BreakSound;
 	BreakScore = BreakScore;
+	destroyed = false;
 
 }
 
@@ -20,6 +21,16 @@ void Brick::DrawBrick()
 		al_draw_bitmap(GetSprite(), pos.x, pos.y, 0);
 }
 
+Rect Brick::GetBrickRect() const
+{
+	return GetSpriteRect();
+}
+
+void Brick::SetBrickRect() 
+{
+	rect = GetSpriteRect();
+}
+
 bool Brick::CheckBallCollision(const Ball& ball) const
 {
 	return !destroyed && rect.IsOverlappingWith(ball.GetBallRect());
@@ -27,8 +38,11 @@ bool Brick::CheckBallCollision(const Ball& ball) const
 
 void Brick::ExecuteBallCollision(Ball& ball)
 {
-	assert(CheckBallCollision(ball));
+	
+	
 
+	if(CheckBallCollision(ball)){
+		assert(CheckBallCollision(ball));
 	const Vec2 ballPos = ball.GetPos();
 	//signbit -if float is neg
 	if (std::signbit(ball.GetVelocity().x) == std::signbit((ballPos - GetCenter()).x)) {
@@ -41,6 +55,8 @@ void Brick::ExecuteBallCollision(Ball& ball)
 		ball.InvertX();
 	}
 	destroyed = true;
+	}
+	
 }
 
 Vec2 Brick::GetCenter() const
