@@ -1,23 +1,28 @@
 #include "Game.h"
 
-
-
-
 Game::Game() 
 {
+	ObjecInit_Ex::InitObject(al_init(), "Allegro");
+	ObjecInit_Ex::InitObject(al_init_font_addon(), "Font addon");
+	ObjecInit_Ex::InitObject(al_init_ttf_addon(), "Font TTF Addon");
+	ObjecInit_Ex::InitObject(al_init_image_addon(), "Image addon");
+
+	//mouse and keyboard
+	ObjecInit_Ex::InitObject(al_install_keyboard(), "Keyboard");
+	ObjecInit_Ex::InitObject(al_install_mouse(), "Mouse");
+
 	
-	parser->LoadXMLFile("Levels/Level1.xml");
-	parser->ReadXMLFile(*Level1);
+	
 
 	font = al_load_ttf_font("Font/zig_____.ttf", 32, 0);
 
-	Vec2 direction;
-	direction.x = 0;
-	direction.y = -1;
+	//Vec2 *direction=new Vec2(0,0);
+	//direction->x = 0;
+	//direction->y = -1;
 
 	walls = Rect(0, Consts::SCREEN_WIDTH, 0.0f, Consts::SCREEN_HEIGHT);
 	bar = new Bar(Consts::BAR_INIT_X, Consts::BAR_INIT_Y);
-	ball = new Ball(Consts::BALL_INIT_X, Consts::BALL_INIT_Y, direction);
+	ball = new Ball(Consts::BALL_INIT_X, Consts::BALL_INIT_Y, Vec2(0,-1)/**direction*/);
 
 	//create queue for events
 	queue = al_create_event_queue();
@@ -26,9 +31,11 @@ Game::Game()
 	
 	//Level2 = new Level("Levels/Level2.txt");
 	//Level3 = new Level("Levels/Level3.txt");
-
+	parser->LoadXMLFile("Levels/Level1.xml");
+	parser->ReadXMLFile(Level1);
+	Level1->InitBrickMap(Level1);
 	al_destroy_bitmap(background);
-	background = al_load_bitmap("Textures/Boards/Board_01.dds");
+	background = Level1->SetLevelBackground();
 
 	//timer
 	timer = new TimerFps(60);
@@ -42,14 +49,7 @@ Game::~Game() {}
 
 void Game::init(int width, int height) 
 {
-	ObjecInit_Ex::InitObject(al_init(),"Allegro");
-	ObjecInit_Ex::InitObject(al_init_font_addon(),"Font addon");
-	ObjecInit_Ex::InitObject(al_init_ttf_addon(),"Font TTF Addon");
-	ObjecInit_Ex::InitObject(al_init_image_addon(),"Image addon");
 	
-	//mouse and keyboard
-	ObjecInit_Ex::InitObject(al_install_keyboard(),"Keyboard");
-	ObjecInit_Ex::InitObject(al_install_mouse(),"Mouse");
 
 	//create display
 	window = al_create_display(width, height);
@@ -138,6 +138,7 @@ void Game::render()
 	
 		bar->Draw();
 		ball->Draw();
+		Level1->DrawBrickMap();
 		
 		al_flip_display();
 		

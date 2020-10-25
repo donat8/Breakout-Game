@@ -8,15 +8,21 @@ Sprite::Sprite(float posX, float posY)
 	pos.y = posY;
 }
 
-//Sprite::~Sprite()
-//{
-//	al_destroy_bitmap(sprite);
-//}
+Sprite::~Sprite()
+{
+	al_destroy_bitmap(sprite);
+}
 
 void Sprite::SetSprite(const char* path)
 { 
 	al_destroy_bitmap(sprite);
+	
 	sprite = al_load_bitmap(path);
+	if (sprite == NULL) {
+		std::cout << "Cannot load bitmap path:" << path << std::endl;
+		exit(1);
+	}
+
 }
 
 float Sprite::GetSpriteWidth() const 

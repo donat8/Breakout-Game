@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Consts.h"
-//#include "Bar.h"
 #include "Rect.h"
 #include "Vec2.h"
 #include "Sprite.h"

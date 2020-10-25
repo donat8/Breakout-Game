@@ -3,10 +3,11 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "Sprite.h"
+
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_image.h>
+#include "Sprite.h"
 
 #include "TimerFps.h"
 #include "Ball.h"
@@ -53,9 +54,9 @@ private:
 	ALLEGRO_EVENT event;
 	ALLEGRO_EVENT_QUEUE* queue;
 
-	Level *Level1;
-	Level *Level2;
-	Level *Level3;
+	Level *Level1=new Level();
+	//Level *Level2;
+	//Level *Level3;
 
 	ALLEGRO_BITMAP *background;
 

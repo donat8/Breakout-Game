@@ -13,7 +13,7 @@ public:
 
 	bool LoadXMLFile(const char* path);
 
-	bool ReadXMLFile(Level level);
+	bool ReadXMLFile(Level *level);
 	
 protected:
 	tinyxml2::XMLDocument doc;

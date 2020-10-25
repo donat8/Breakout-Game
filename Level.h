@@ -8,14 +8,14 @@ public:
 
 
 	ALLEGRO_BITMAP* SetLevelBackground();
-	void InitBrickMap();
+	void InitBrickMap(Level *level);
 	void DrawBrickMap();
 	void StartLevel();
 
-	unsigned int *RowCount;
-	unsigned int *ColumnCount;
-	unsigned int *RowSpacing;
-	unsigned int *ColumnSpacing;
+    const unsigned int *RowCount;
+	const unsigned int *ColumnCount;
+	const unsigned int *RowSpacing;
+	const unsigned int *ColumnSpacing;
 	const char *BackgroundTexture;
 
 	Brick *BrickSoft;

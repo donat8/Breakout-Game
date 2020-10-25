@@ -8,6 +8,7 @@ class Sprite {
 public:
 	Sprite() = default;
 	Sprite(float posX,float posY);
+	~Sprite();
 
 	/*virtual void Reset();*/
 	ALLEGRO_BITMAP* sprite = NULL;
