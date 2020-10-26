@@ -14,7 +14,10 @@ Game::Game()
 	
 	
 
-	font = al_load_ttf_font("Font/zig_____.ttf", 32, 0);
+	font = al_load_ttf_font("Font/zig_____.ttf", 20, 0);
+	col = al_map_rgba(255, 255, 255, 1);
+
+	heartFull=al_load_bitmap("Textures/Heart_full.dds");
 
 	//Vec2 *direction=new Vec2(0,0);
 	//direction->x = 0;
@@ -39,6 +42,7 @@ Game::Game()
 
 	//timer
 	timer = new TimerFps(60);
+	
 
 	isRunning = true;
 }
@@ -53,6 +57,7 @@ void Game::init(int width, int height)
 
 	//create display
 	window = al_create_display(width, height);
+	//al_set_display_flag(window, ALLEGRO_FULLSCREEN_WINDOW, !(al_get_display_flags(window) & ALLEGRO_FULLSCREEN_WINDOW));
 
 
 	//register events
@@ -68,7 +73,7 @@ void Game::init(int width, int height)
 
 void Game::handleEvents() {
 
-	BarXBefore = bar->GetPos().x;
+	
 
 	al_get_keyboard_state(&keyState);
 
@@ -76,8 +81,12 @@ void Game::handleEvents() {
 
 		al_wait_for_event(queue, &event);
 		//x closes the window, esc doesn't still do anything (maybe revert to menu)
-		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE || al_key_down(&keyState, ALLEGRO_KEY_ESCAPE))
+		/*if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE || al_key_down(&keyState, ALLEGRO_KEY_ESCAPE))*/
+		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE || (event.type == ALLEGRO_EVENT_KEY_DOWN && event.keyboard.keycode == ALLEGRO_KEY_ESCAPE))
 			isRunning = false;
+
+		if (event.type == ALLEGRO_EVENT_KEY_DOWN && event.keyboard.keycode == ALLEGRO_KEY_F11)
+			al_set_display_flag(window, ALLEGRO_FULLSCREEN_WINDOW, true);
 
 		//on mouse click can use mouse for moving the Bouncer
 		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
@@ -85,7 +94,6 @@ void Game::handleEvents() {
 		if (event.type == ALLEGRO_EVENT_MOUSE_AXES && mouseFlag == true) {
 			{
 		    	bar->Move(event.mouse.x);
-		    	BarXBefore = bar->GetPos().x;
 			}
 			 if (ballState == ball_stationary)
 			   	ball->Move(event.mouse.x);
@@ -99,6 +107,7 @@ void Game::handleEvents() {
 			case ball_stationary:
 				ball->SetPos(ballStatPos);
 				ball->Update(0);
+				
 				if (al_key_down(&keyState, ALLEGRO_KEY_SPACE))
 					ballState = ball_released;
 				break;
@@ -106,10 +115,10 @@ void Game::handleEvents() {
 				ball->Update(1);
 				ball->BallToWallCollision(walls);
 				bar->BallCollision(*ball, BarXBefore);
-				
-				ball->Update(1);
 				Level1->CheckBrickBallCollision(*ball);
-			//	Level1->CheckBrickBallCollision(*ball);
+				ball->Update(1);
+				
+			
 				break;
 			}		
 		}
@@ -121,28 +130,32 @@ void Game::handleEvents() {
 void Game::Update() {
 
 	
-	
 
-	
-
-
-	
 }
 
 void Game::render() 
 {
 	
 	if (event.type == ALLEGRO_EVENT_TIMER) {
+		BarXBefore = bar->GetPos().x;
 	
 		al_draw_bitmap(background, 0, 0, 0);
 		bar->WallCollision(walls);
 		
-	
+		if(ballState==ball_stationary)
+			al_draw_text(font, col, 230, 550, NULL, "Press SPACE to release!");
 		bar->Draw();
 		ball->Draw();
 		Level1->DrawBrickMap();
 		
-		al_flip_display();
+		al_draw_bitmap(heartFull,750,10,0);
+		al_draw_bitmap(heartFull, 715, 10, 0);
+		al_draw_bitmap(heartFull, 680, 10, 0);
+
+			
+
+
+			al_flip_display();
 		
 	}
 }

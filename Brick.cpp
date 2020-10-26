@@ -12,7 +12,7 @@ Brick::Brick(const char* Id, const char* Texture, const unsigned int* HitPoints,
 	BreakSound = BreakSound;
 	BreakScore = BreakScore;
 	destroyed = false;
-
+	
 }
 
 void Brick::DrawBrick()
@@ -20,6 +20,7 @@ void Brick::DrawBrick()
 	if(!destroyed)
 		al_draw_bitmap(GetSprite(), pos.x, pos.y, 0);
 }
+
 
 Rect Brick::GetBrickRect() const
 {
@@ -38,24 +39,27 @@ bool Brick::CheckBallCollision(const Ball& ball) const
 
 void Brick::ExecuteBallCollision(Ball& ball)
 {
-	
-	
-
 	if(CheckBallCollision(ball)){
-		assert(CheckBallCollision(ball));
-	const Vec2 ballPos = ball.GetPos();
-	//signbit -if float is neg
-	if (std::signbit(ball.GetVelocity().x) == std::signbit((ballPos - GetCenter()).x)) {
-		ball.InvertY();
-	}
-	else if (ballPos.x >= rect.left && ballPos.x <= rect.right) {
-		ball.InvertY();
-	}
-	else {
-		ball.InvertX();
-	}
-	destroyed = true;
-	}
+
+	    assert(CheckBallCollision(ball));
+	    const Vec2 ballPos = ball.GetPos();
+	    //signbit -if float is neg
+	    if (std::signbit(ball.GetVelocity().x) == std::signbit((ballPos - GetCenter()).x)) {
+	    	ball.InvertY();
+	    }
+	    else if (ballPos.x >= rect.left && ballPos.x <= rect.right) {
+	    	ball.InvertY();
+	    }
+	    else {
+	    	ball.InvertX();
+	    }
+	    HitPoints--;
+		
+			if (HitPoints == 0) {
+				destroyed = true;
+			/*	BreakScore*/
+			}
+    }
 	
 }
 

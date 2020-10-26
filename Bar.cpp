@@ -50,9 +50,16 @@ bool Bar::BallCollision(Ball& ball, double BarXBefore)
 		/*else
 		{*/
 
-		double AfterBefore = GetBarRect().left - BarXBefore;
+
+
+		float AfterBefore = GetBarRect().left - BarXBefore;
+
+		Vec2 dir = Vec2(AfterBefore / 6, -1.0f);
+		ball.SetDirection(dir);
+
+
 		std::cout << AfterBefore << std::endl;
-		ball.InvertY();
+		//ball.InvertY();
 		/*}*/
 
 		return true;

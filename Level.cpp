@@ -68,6 +68,26 @@ void Level::DrawBrickMap()
 
 void Level::CheckBrickBallCollision(Ball& ball)
 {
+	//bool collision = false;
+	//int index;
+	//float BallToBrickDistSq1;
+
+	//for (int i = 0; i < 30; i++) {
+	//	if (bricks[i]->CheckBallCollision(ball)) {
+	//		if (bricks[i - 1]->CheckBallCollision(ball)) {
+	//			const float distance1 = (ball.GetCenterOfBall() - bricks[i - 1]->GetCenter()).GetLengthSq();
+	//			const float distance2 = (bricks[i]->GetCenter() - ball.GetCenterOfBall()).GetLengthSq();
+	//			if (distance1 < distance2)
+	//				bricks[i - 1]->ExecuteBallCollision(ball);
+	//			else
+	//				bricks[i]->ExecuteBallCollision(ball);
+	//		}
+	//		else
+	//			bricks[i]->ExecuteBallCollision(ball);	
+	//	}
+	//}
+	
+
 	for (auto brick : bricks) {
 		brick->ExecuteBallCollision(ball);
 	}

@@ -42,6 +42,11 @@ private:
 
 	ALLEGRO_DISPLAY *window;
 	ALLEGRO_FONT* font;
+	//mebe define somewhere else
+	ALLEGRO_COLOR col;
+
+	ALLEGRO_BITMAP *heartFull;
+	
 
 	Rect walls;
 	Bar *bar;

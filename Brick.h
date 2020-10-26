@@ -13,7 +13,7 @@ public:
 	void DrawBrick();
 
 	int GetBreakScore();
-	int SetBreakScore();
+	int RemoveOneBreakScore();
 
 	void PlayHitSound();
 	void PlayBreakSound();
@@ -31,7 +31,7 @@ protected:
 	const char* Texture;
 
 	//times to hit to destroy
-	const unsigned int HitPoints;
+	unsigned int HitPoints;
 
 	const char* HitSound;
 	const char* BreakSound;

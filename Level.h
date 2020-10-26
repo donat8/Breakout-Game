@@ -27,6 +27,8 @@ public:
 
 	const char* BricksMap;
 
+	
+
 protected:
 
 	

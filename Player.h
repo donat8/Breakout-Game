@@ -11,6 +11,7 @@ public:
 
 	//kod new game-a
 	void Reset();
+
 	//kod gubljenja života
 	void ResetPosition();
 
