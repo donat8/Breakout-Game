@@ -7,6 +7,9 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+
 #include "Sprite.h"
 
 #include "TimerFps.h"
@@ -14,6 +17,7 @@
 #include "Bar.h"
 #include "Level.h"
 #include "XMLParser.h"
+#include "Player.h"
 
 enum ballState {
 	ball_stationary,
@@ -37,16 +41,12 @@ public:
 	bool running() { return isRunning; }
 
 private:
-	int cnt;
 	bool isRunning;
 
 	ALLEGRO_DISPLAY *window;
 	ALLEGRO_FONT* font;
 	//mebe define somewhere else
 	ALLEGRO_COLOR col;
-
-	ALLEGRO_BITMAP *heartFull;
-	
 
 	Rect walls;
 	Bar *bar;
@@ -63,10 +63,13 @@ private:
 	//Level *Level2;
 	//Level *Level3;
 
+	int Scene = 0;
+
+	Player* player;
+
 	ALLEGRO_BITMAP *background;
 
 	XMLParser *parser=new XMLParser("Levels/Level1.xml");
-
 
 	bool mouseFlag = false;
 	bool ballFlag = false;

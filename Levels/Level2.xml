@@ -40,9 +40,9 @@ BreakSound=""
 BreakScore="" />
 </BrickTypes>
 <Bricks>
-H H H S H H H H S H H H
-M M M I S S S S I M M M
-M M M S S S S S S S M M
+H H H H H H H H H H H H 
+M H H M M M M M M H H M 
+S M S S I I I S S S M S 
 S I S S S S S S S S I S
 S S S S S S S S S S S S
 </Bricks></Level>

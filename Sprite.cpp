@@ -3,7 +3,6 @@
 
 Sprite::Sprite(float posX, float posY)
 {
-	/*pos =Vec2(posX, posY);*/
 	pos.x = posX;
 	pos.y = posY;
 }
@@ -35,18 +34,12 @@ float Sprite::GetSpriteHeight() const
 	return al_get_bitmap_height(sprite); 
 }
 
-//hm
-//void Sprite::Update()
-//{
-//
-//	//for bouncer
-//	
-//	al_draw_bitmap(sprite, pos.x, initposY, 0);
-//}
-
+//moves the ball to destination
 void Sprite::Move(float x)
 {
-	this->pos.x = x-GetSpriteWidth()/2;
+	if(x>60 && x<740){
+		this->pos.x = x-GetSpriteWidth()/2;
+	}
 }
 
 
@@ -57,14 +50,12 @@ ALLEGRO_BITMAP* Sprite::GetSprite()
 
 Rect Sprite::GetSpriteRect() const
 {
-	//std::cout << GetSpriteWidth() << std::endl;
-
 	return Rect(pos,GetSpriteWidth(),GetSpriteHeight());
 }
 
 
-
-Vec2 Sprite::GetPos() {
+Vec2 Sprite::GetPos() 
+{
 	return this->pos;
 }
 
@@ -72,3 +63,4 @@ void Sprite::SetPos(Vec2 new_pos)
 { 
 	this->pos = new_pos; 
 }
+

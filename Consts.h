@@ -14,6 +14,8 @@ public:
 	static const float BAR_INIT_X;
 	static const float BAR_INIT_Y;
 
+	static const char* MOVE_THE_MOUSE;
+	static const char* SPACE_TO_RELEASE;
 
 
 

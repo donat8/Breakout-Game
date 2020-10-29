@@ -1,7 +1,6 @@
 #include "Ball.h"
 
 
-
 Ball::Ball(float posX, float posY, const Vec2& dir_in): Sprite(posX,posY)	
 {
 	SetSprite("Textures/Ball.dds");
@@ -18,15 +17,12 @@ void Ball::Update(float val)
 	pos += vel * val;
 }
 
+
 //reprogram
 void Ball::UpdateBeforeRelease() {
 	al_draw_bitmap(sprite, Sprite::pos.x, Sprite::initposY, 0);
 }
 
-void Ball::ResetBall()
-{
-	al_draw_bitmap(sprite, Sprite::initposX, Sprite::initposY, 0);
-}
 
 Rect Ball::GetBallRect() const
 {

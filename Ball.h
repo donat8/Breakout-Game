@@ -16,9 +16,10 @@ public:
 	//change pos
 	void Update(float val);
 
+
+
 	void UpdateBeforeRelease();
 
-	void ResetBall();
 
 	Rect GetBallRect() const;
 

@@ -21,8 +21,8 @@ void Level::InitBrickMap(Level *level)
 			const char brick = BricksMap[countBricksMap];
 			Vec2 BrickPos;
 
-			BrickPos.x = 20 + *ColumnSpacing * j + BrickW * j;
-			BrickPos.y = 20 + *RowSpacing * i + BrickH * i;
+			BrickPos.x = 45 + *ColumnSpacing * j + BrickW * j;
+			BrickPos.y = 54 + *RowSpacing * i + BrickH * i;
 			switch (brick) {
 				case 'S':
 				{Brick* newBrick = new Brick(*BrickSoft);
@@ -66,31 +66,19 @@ void Level::DrawBrickMap()
 		brick->DrawBrick();
 }
 
-void Level::CheckBrickBallCollision(Ball& ball)
+unsigned int Level::CheckBrickBallCollision(Ball& ball)
 {
-	//bool collision = false;
-	//int index;
-	//float BallToBrickDistSq1;
+	unsigned int addScore=0;
 
-	//for (int i = 0; i < 30; i++) {
-	//	if (bricks[i]->CheckBallCollision(ball)) {
-	//		if (bricks[i - 1]->CheckBallCollision(ball)) {
-	//			const float distance1 = (ball.GetCenterOfBall() - bricks[i - 1]->GetCenter()).GetLengthSq();
-	//			const float distance2 = (bricks[i]->GetCenter() - ball.GetCenterOfBall()).GetLengthSq();
-	//			if (distance1 < distance2)
-	//				bricks[i - 1]->ExecuteBallCollision(ball);
-	//			else
-	//				bricks[i]->ExecuteBallCollision(ball);
-	//		}
-	//		else
-	//			bricks[i]->ExecuteBallCollision(ball);	
-	//	}
-	//}
-	
+	Vec2 centerOfBall=ball.GetCenterOfBall();
 
 	for (auto brick : bricks) {
-		brick->ExecuteBallCollision(ball);
+		Vec2 centerOfBrick = brick->GetCenter();
+		if((centerOfBrick-centerOfBall).GetLength()>1.5+brick->GetSpriteWidth()||
+			(centerOfBrick - centerOfBall).GetLength() >1.5+brick->GetSpriteHeight() )
+			addScore+=brick->ExecuteBallCollision(ball);
 	}
+	return addScore;
 }
 
 

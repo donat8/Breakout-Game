@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <iostream>
 #include "Sprite.h"
-#include <vector>
 #include "Ball.h"
 
 class Brick :public Sprite {
@@ -21,8 +20,8 @@ public:
 	Rect GetBrickRect()  const;
 	void SetBrickRect();
 
-	bool CheckBallCollision(const Ball& ball) const;
-	void ExecuteBallCollision(Ball& ball);
+	bool CheckBallCollision(Ball& ball) const;
+	unsigned int ExecuteBallCollision(Ball& ball);
 	Vec2 GetCenter() const;
 
 

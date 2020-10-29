@@ -8,9 +8,10 @@ public:
 
 
 	ALLEGRO_BITMAP* SetLevelBackground();
+
 	void InitBrickMap(Level *level);
 	void DrawBrickMap();
-	void CheckBrickBallCollision(Ball& ball);
+	unsigned int CheckBrickBallCollision(Ball& ball);
 
 	void StartLevel();
 
@@ -27,28 +28,9 @@ public:
 
 	const char* BricksMap;
 
-	
 
 protected:
 
-	
-	
-
-	//char Id;
-	//const char* Texture;
-	//unsigned int HitPoints;
-	//const char* HitSound;
-	//const char* BreakSound;
-	//unsigned int BreakScore;
-
-
-	
-
-	Brick *bricks[40];
-
-
-
-	// brick configuration on screen
-
+	Brick *bricks[60];
 
 };

@@ -50,7 +50,7 @@ bool Bar::BallCollision(Ball& ball, double BarXBefore)
 		/*else
 		{*/
 
-
+		//fix pos of ball after collision to avoid double coll
 
 		float AfterBefore = GetBarRect().left - BarXBefore;
 
