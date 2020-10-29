@@ -8,6 +8,7 @@ Brick::Brick(const char* Id, const char* Texture, const unsigned int* HitPoints,
 	const char* BreakSound, unsigned int* BreakScore)
 	:Sprite(), Id(Id), HitPoints(*HitPoints), HitSound(HitSound), BreakSound(BreakSound),BreakScore(*BreakScore)
 {
+	this->rect = Rect();
 	SetSprite(Texture);
 	destroyed = false;
 	this->Texture = Texture;
@@ -30,7 +31,6 @@ void Brick::SetBrickRect()
 	rect = GetSpriteRect();
 }
 
-//dodati u rect da gleda sljed poziciju
 bool Brick::CheckBallCollision(Ball& ball) const
 {
 	const Vec2 ballPos = ball.GetPos();
@@ -52,7 +52,6 @@ unsigned int Brick::ExecuteBallCollision(Ball& ball)
 
 	    //signbit -if float is neg
 	    if (std::signbit(ball.GetVelocity().x) == std::signbit((ballPos - GetCenter()).x)) {
-			
 			ball.InvertY();
 	    }
 	    else if (ballPos.x >= rect.left && ballPos.x <= rect.right) {
@@ -69,17 +68,14 @@ unsigned int Brick::ExecuteBallCollision(Ball& ball)
 		sample = al_load_sample(HitSound);
 		if (!sample)
 			std::cout << "didnt load HitSound" << std::endl;
-		if (!al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL))
-			std::cout << "hit" << std::endl;
+		al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 
 		if (HitPoints == 0) {
 			destroyed = true;
 			sample = al_load_sample(BreakSound);
-			if (!al_play_sample(sample, 0.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL))
-				std::cout << "break" << std::endl;
+			al_play_sample(sample, 0.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 			addTheScore += BreakScore;
 		}		
-		
 		return addTheScore;
     }	
 	return 0;

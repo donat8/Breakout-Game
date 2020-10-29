@@ -48,3 +48,19 @@ void Player::RemoveOneBall()
 {
 	RemainingBalls--;
 }
+
+unsigned int Player::GetPlayerScore()
+{
+	return PlayerScore;
+}
+
+void Player::ResetBalls()
+{
+	RemainingBalls = 3;
+}
+
+void Player::ResetPlayerScore()
+{
+	
+	PlayerScore = 0;
+}

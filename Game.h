@@ -25,7 +25,7 @@ enum ballState {
 	ball_freely_moving
 };
 
-enum state{START,GAME_ACTIVE,GAMEOVER,GAMEWON};
+enum state{START,GAME_ACTIVE,GAMEOVER,GAMEWON,LOAD_LEVEL};
 
 
 class Game {
@@ -36,8 +36,7 @@ public:
 	void init();
 
 	void handleEvents();
-	void Update();
-	void render();
+	void draw();
 
 	void clean();
 
@@ -64,17 +63,13 @@ private:
 	ALLEGRO_EVENT_QUEUE* queue;
 
 	std::vector<Level> Levels;
-	unsigned int Level_no;
-
-	/*Level *Level1=new Level();*/
-	//Level *Level2;
-	//Level *Level3;
+	unsigned int Level_no=0;
 
 	int Scene = 0;
 
 	Player* player;
 
-
+	bool IsLoaded = false;
 
 	XMLParser *parser=new XMLParser();
 
@@ -85,5 +80,7 @@ private:
 
 	TimerFps *timer; 
 
-	ALLEGRO_BITMAP *bg;
+	int maxScoreLvl1 = 4350;
+
+	ALLEGRO_BITMAP *bg=NULL;
 };

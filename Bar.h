@@ -22,14 +22,9 @@ public:
 
     Rect GetBarRect() const;
 
-    void ResetCooldown();
-
-
 private:
-    float halfWidth;
 
     const float speed = 2.0f;
-    //multiplies the speed depending on "key hold time"
     float multiplier = 3.0f;
  
 

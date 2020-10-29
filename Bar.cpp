@@ -6,11 +6,11 @@
 Bar::Bar(float posX,float posY) :Sprite(posX, posY)
 {
 	SetSprite("Textures/Bar.dds");
-	halfWidth = GetSpriteWidth() / 2;
 }
 
 Bar::~Bar()
 {
+	al_destroy_bitmap(sprite);
 }
 
 void Bar::Draw() const
@@ -25,49 +25,15 @@ bool Bar::BallCollision(Ball& ball, double BarXBefore)
 	if (bar.IsOverlappingWith(ball.GetBallRect())==true)
 	{
 		const Vec2 ballPos = ball.GetPos();
-		//if (std::signbit(ball.GetVelocity().x) == std::signbit((ballPos - pos).x)
-		//	|| (ballPos.x >= bar.left && ballPos.x <= bar.right)) {
-
-		//	/*Vec2 dir;
-		//	const float DiffOnXAxis = ballPos.x - pos.x;
-		//	if (std::abs(xDifference) < fixedZoneHalfWidth)
-		//	{
-		//		if (xDifference < 0.0f)
-		//		{
-		//			dir = Vec2(-fixedZoneExitX, -1.0f);
-		//		}
-		//		else
-		//		{
-		//			dir = Vec2(fixedZoneExitX, -1.0f);
-		//		}
-		//	}
-		//	else
-		//	{
-		//		dir = Vec2(xDifference * exitXFactor, -1.0f);
-		//	}
-		//	ball.SetDirection(dir);*/
-		//}
-		/*else
-		{*/
-
-		//fix pos of ball after collision to avoid double coll
 
 		float AfterBefore = GetBarRect().left - BarXBefore;
 
 		Vec2 dir = Vec2(AfterBefore / 6, -1.0f);
-		ball.SetDirection(dir);
-
-
-		std::cout << AfterBefore << std::endl;
-		//ball.InvertY();
-		/*}*/
-
+		ball.SetDirection(dir);	
 		return true;
 	}
 	return false;
 }
-
-
 
 void Bar::WallCollision(const Rect& walls)
 {
@@ -94,7 +60,4 @@ Rect Bar::GetBarRect() const
 	return GetSpriteRect();
 }
 
-void Bar::ResetCooldown()
-{
-}
 

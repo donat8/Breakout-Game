@@ -12,10 +12,8 @@ Rect::Rect(const Vec2& topLeft, const Vec2& bottomRight)
 }
 
 Rect::Rect(const Vec2& topLeft, float width, float height)
-	/*:Rect(topLeft.x,topLeft.y,width+topLeft,height+topLeft.y)*/
 	:Rect(topLeft.x,topLeft.x+width,topLeft.y,topLeft.y+height)
 {
-
 }
 
 bool Rect::IsOverlappingWith(const Rect& other) const
@@ -24,17 +22,6 @@ bool Rect::IsOverlappingWith(const Rect& other) const
 		&& bottom > other.top && top < other.bottom;	
 }
 
-bool Rect::IsContainedBy(const Rect& other) const
-{
-	return left >= other.left && right <= other.right
-		&& top >= other.top && bottom <= other.bottom;
-}
-
-
-Rect Rect::GetExpanded(float offset) const
-{
-	return Rect(left - offset, right + offset, top - offset, bottom + offset);
-}
 
 Vec2 Rect::GetCenter() const
 {

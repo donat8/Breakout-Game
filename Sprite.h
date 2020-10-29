@@ -23,11 +23,7 @@ public:
 	//for moving with the mouse
 	virtual void Move(float x);
 
-
 protected:
 	Vec2 pos;
 
-	//initial position and acceleration
-	int initposX = 0;
-	int initposY = 0;
 };

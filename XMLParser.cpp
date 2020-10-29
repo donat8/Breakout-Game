@@ -2,16 +2,10 @@
 #include <iostream>
 
 
-
-
 using namespace tinyxml2;
 
-XMLParser::XMLParser(/*const char* path*/)
+XMLParser::XMLParser()
 {
-	/*if (LoadXMLFile(path) == false) {
-		std::cout << "Couldnt load path: " << path << std::endl;
-		exit(1);
-	}	*/
 }
 
 XMLParser::~XMLParser()
@@ -40,7 +34,6 @@ bool XMLParser::ReadXMLFile(Level *level){
 		unsigned int *RowSpacing = new unsigned int(0);
 		unsigned int *ColumnSpacing= new unsigned int(0);
 		const char* BackgroundTexture = 0;
-	
 
 		root->QueryUnsignedAttribute("RowCount", RowCount);
 	
@@ -67,7 +60,6 @@ bool XMLParser::ReadXMLFile(Level *level){
 		    	if (brickType != 0) {
 					//bricktype element
 					
-
 					const char* Id =brickType->FindAttribute("Id")->Value();
 					const char* Texture=brickType->FindAttribute("Texture")->Value();
 				    unsigned int HitPoints=3;
@@ -96,7 +88,5 @@ bool XMLParser::ReadXMLFile(Level *level){
 		level->BricksMap =Bricksmap ;
 		return true;
 	}
-
-	//Srediti
 	return false;
 }

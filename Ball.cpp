@@ -17,13 +17,6 @@ void Ball::Update(float val)
 	pos += vel * val;
 }
 
-
-//reprogram
-void Ball::UpdateBeforeRelease() {
-	al_draw_bitmap(sprite, Sprite::pos.x, Sprite::initposY, 0);
-}
-
-
 Rect Ball::GetBallRect() const
 {
 	return GetSpriteRect();
@@ -48,8 +41,6 @@ void Ball::InvertY() {
 	vel.y = -vel.y;
 }
 
-
-
 int Ball::BallToWallCollision(const Rect& walls)
 {
 	int collided = 0;
@@ -62,11 +53,6 @@ int Ball::BallToWallCollision(const Rect& walls)
 	}
 	if (ball.top < walls.top) {
 		InvertY();
-	}
-	//ball out of bounds (lose a life)
-	else if (ball.bottom > walls.bottom) {
-		InvertY();
-		collided = 2;
 	}
 	return collided;
 }

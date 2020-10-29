@@ -6,19 +6,18 @@
 class Player {
 public:
 	Player();
-	~Player();
 
 	unsigned int GetRemainingBalls();
 	void AddPlayerScore(const unsigned int &points);
 	void DrawPlayerScore();
 	void DrawHearts();
 	void RemoveOneBall();
+	unsigned int GetPlayerScore();
 
 	//kod new game-a
-	void Reset();
+	void ResetBalls();
 
 	//kod gubljenja života
-	void ResetPosition();
 	void ResetPlayerScore();
 
 private:

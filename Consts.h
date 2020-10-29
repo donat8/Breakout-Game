@@ -16,6 +16,16 @@ public:
 
 	static const char* MOVE_THE_MOUSE;
 	static const char* SPACE_TO_RELEASE;
+	static const char* GAME_OVER;
+	static const char* ENTER_RESTART;
+	static const char* CONGRATULATIONS;
+	static const char* YOU_WON;
+	static const char* ENTER_START;
+	static const char* LOADING;
+
+	static const char* ENTER_CONTINUE;
+
+
 
 
 

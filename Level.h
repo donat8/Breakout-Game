@@ -12,10 +12,11 @@ public:
 	ALLEGRO_BITMAP* SetLevelBackground();
 
 	void InitBrickMap(Level *level);
+
 	void DrawBrickMap();
+
 	unsigned int CheckBrickBallCollision(Ball& ball);
 
-	void StartLevel();
 
     const unsigned int *RowCount;
 	const unsigned int *ColumnCount;

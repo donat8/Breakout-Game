@@ -11,9 +11,6 @@ public:
 
 	void DrawBrick();
 
-	int GetBreakScore();
-	int RemoveOneBreakScore();
-
 	Rect GetBrickRect()  const;
 	void SetBrickRect();
 
