@@ -8,9 +8,9 @@ Game* game = nullptr;
 
 int main(int argc, char* argv[]) {
 
-	game = new Game();
+	game = new Game(Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT);
 
-	game->init(Consts::SCREEN_WIDTH, Consts::SCREEN_HEIGHT);
+	game->init();
 
 	while (game->running()) {
 		

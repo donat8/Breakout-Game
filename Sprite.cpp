@@ -1,11 +1,20 @@
 #include "Sprite.h"
 #include <iostream>
 
+Sprite::Sprite()
+{
+	pos.x = 0;
+	pos.y = 0;
+
+}
+
 Sprite::Sprite(float posX, float posY)
 {
 	pos.x = posX;
 	pos.y = posY;
 }
+
+
 
 Sprite::~Sprite()
 {

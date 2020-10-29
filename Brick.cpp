@@ -8,14 +8,9 @@ Brick::Brick(const char* Id, const char* Texture, const unsigned int* HitPoints,
 	const char* BreakSound, unsigned int* BreakScore)
 	:Sprite(), Id(Id), HitPoints(*HitPoints), HitSound(HitSound), BreakSound(BreakSound),BreakScore(*BreakScore)
 {
-	Id = Id;
 	SetSprite(Texture);
-	HitPoints = HitPoints;
-	HitSound = HitSound; 
-	BreakSound = BreakSound;
-	BreakScore = BreakScore;
 	destroyed = false;
-	
+	this->Texture = Texture;
 }
 
 void Brick::DrawBrick()

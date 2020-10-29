@@ -6,7 +6,7 @@
 class Sprite {
 
 public:
-	Sprite() = default;
+	Sprite();
 	Sprite(float posX,float posY);
 	~Sprite();
 

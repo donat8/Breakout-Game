@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <iostream>
-
+#include <vector>
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_ttf.h>
@@ -25,17 +25,20 @@ enum ballState {
 	ball_freely_moving
 };
 
+enum state{START,GAME_ACTIVE,GAMEOVER,GAMEWON};
+
 
 class Game {
 public:
-	Game();
+	Game(int width, int height);
 	~Game();
 
-	void init(int width, int height);
+	void init();
 
 	void handleEvents();
 	void Update();
 	void render();
+
 	void clean();
 
 	bool running() { return isRunning; }
@@ -54,12 +57,16 @@ private:
 
 	double BarXBefore=0;
 
-	char ballState=ball_stationary;
+	int ballState=ball_stationary;
+	int state=START;
 	
 	ALLEGRO_EVENT event;
 	ALLEGRO_EVENT_QUEUE* queue;
 
-	Level *Level1=new Level();
+	std::vector<Level> Levels;
+	unsigned int Level_no;
+
+	/*Level *Level1=new Level();*/
 	//Level *Level2;
 	//Level *Level3;
 
@@ -67,9 +74,9 @@ private:
 
 	Player* player;
 
-	ALLEGRO_BITMAP *background;
 
-	XMLParser *parser=new XMLParser("Levels/Level1.xml");
+
+	XMLParser *parser=new XMLParser();
 
 	bool mouseFlag = false;
 	bool ballFlag = false;
@@ -78,4 +85,5 @@ private:
 
 	TimerFps *timer; 
 
+	ALLEGRO_BITMAP *bg;
 };

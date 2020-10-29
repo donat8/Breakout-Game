@@ -14,9 +14,6 @@ public:
 	int GetBreakScore();
 	int RemoveOneBreakScore();
 
-	void PlayHitSound();
-	void PlayBreakSound();
-
 	Rect GetBrickRect()  const;
 	void SetBrickRect();
 

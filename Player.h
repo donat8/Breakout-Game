@@ -8,11 +8,11 @@ public:
 	Player();
 	~Player();
 
-	unsigned int GetRemainingBalls() { return RemainingBalls; }	
+	unsigned int GetRemainingBalls();
 	void AddPlayerScore(const unsigned int &points);
 	void DrawPlayerScore();
 	void DrawHearts();
-	bool RemoveOneBall();
+	void RemoveOneBall();
 
 	//kod new game-a
 	void Reset();
@@ -23,7 +23,7 @@ public:
 
 private:
 	unsigned int PlayerScore = 0;
-	unsigned int RemainingBalls = 0;
+	unsigned int RemainingBalls = 3;
 	ALLEGRO_BITMAP* heartFull;
 	ALLEGRO_BITMAP* heartEmpty;
 	ALLEGRO_FONT* font;

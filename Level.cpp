@@ -1,7 +1,6 @@
 #include "Level.h"
 
 
-
 ALLEGRO_BITMAP* Level::SetLevelBackground()
 {
 	return al_load_bitmap(BackgroundTexture);

@@ -6,12 +6,12 @@
 
 using namespace tinyxml2;
 
-XMLParser::XMLParser(const char* path)
+XMLParser::XMLParser(/*const char* path*/)
 {
-	if (LoadXMLFile(path) == false) {
+	/*if (LoadXMLFile(path) == false) {
 		std::cout << "Couldnt load path: " << path << std::endl;
 		exit(1);
-	}	
+	}	*/
 }
 
 XMLParser::~XMLParser()
@@ -41,9 +41,6 @@ bool XMLParser::ReadXMLFile(Level *level){
 		unsigned int *ColumnSpacing= new unsigned int(0);
 		const char* BackgroundTexture = 0;
 	
-		/*root->FindAttribute("RowCount")->QueryIntValue(level.RowCount);*/
-		/*int bla = 1;
-		root->QueryIntAttribute("RowCount", &bla);*/
 
 		root->QueryUnsignedAttribute("RowCount", RowCount);
 	

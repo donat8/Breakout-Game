@@ -8,7 +8,7 @@ class XMLParser
 {
 	
 public:
-	XMLParser(const char* path);
+	XMLParser(/*const char* path*/);
 	~XMLParser();
 
 	bool LoadXMLFile(const char* path);

@@ -1,6 +1,8 @@
 #pragma once
 #include "Brick.h"
 #include <vector>
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro.h>
 
 class Level{
 public:
